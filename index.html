@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Reis Manaj | Web Developer</title>
+  <meta name="description" content="Portfolio of Reis Manaj, a passionate Web Developer and founder of Business Web Studio. Specializing in responsive and SEO-optimized websites." />
+  <link rel="icon" href="logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
+  <style>
+    :root {
+      --primary: #2563eb;
+      --accent: #3b82f6; /* Vendosa nje ngjyre te bukur per accent */
+      --bg-start: #0f172a;
+      --bg-end: #1e293b;
+      --card: rgba(30, 41, 59, 0.8);
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+      --radius: 18px;
+      --shadow: 0 8px 32px 0 rgba(31, 41, 55, 0.25);
+      --glass-bg: rgba(255, 255, 255, 0.1);
+      --glass-border: rgba(255, 255, 255, 0.2);
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, var(--bg-start), var(--bg-end));
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2rem 5vw 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: saturate(180%) blur(10px);
+      background: rgba(15, 23, 42, 0.8);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+      transition: background 0.3s ease;
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 1px;
+      user-select: none;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+    }
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      margin-left: 2rem;
+      font-weight: 600;
+      transition: color 0.3s, transform 0.2s;
+    }
+    nav a:hover,
+    nav a:focus-visible {
+      color: var(--accent);
+      outline: none;
+      transform: scale(1.1);
+    }
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 5vw;
+    }
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 0 3rem;
+      gap: 1.5rem;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp 0.8s forwards 0.3s;
+    }
+    .hero img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--primary);
+      box-shadow: 0 0 20px var(--primary);
+      background: #fff1;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin: 0;
+      color: var(--primary);
+      text-shadow: 0 0 5px var(--primary);
+    }
+    .hero h2 {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin: 0 0 1rem;
+    }
+    .about {
+      max-width: 650px;
+      font-size: 1.15rem;
+      color: var(--text);
+      line-height: 1.7;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s forwards 0.6s;
+    }
+    .section {
+      margin-top: 4rem;
+      padding-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 0.8s forwards;
+    }
+    .section:nth-of-type(2) { animation-delay: 0.9s; }
+    .section:nth-of-type(3) { animation-delay: 1.2s; }
+    .section:nth-of-type(4) { animation-delay: 1.5s; }
+    .section-title {
+      font-size: 2.3rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      color: var(--primary);
+      letter-spacing: 0.5px;
+      text-align: center;
+      text-shadow: 0 0 6px var(--primary);
+      user-select: none;
+    }
+    .skills-list,
+    .services-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      justify-content: center;
+    }
+    .skill,
+    .service {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 1rem 1.8rem;
+      font-weight: 600;
+      color: var(--text);
+      box-shadow: var(--shadow);
+      font-size: 1rem;
+      transition: transform 0.25s ease, box-shadow 0.3s ease;
+      cursor: default;
+      user-select: none;
+      min-width: 120px;
+      text-align: center;
+    }
+    .skill:hover,
+    .service:hover,
+    .skill:focus-visible,
+    .service:focus-visible {
+      transform: translateY(-6px) scale(1.08);
+      box-shadow: 0 15px 40px 0 rgba(37, 99, 235, 0.3);
+      outline: none;
+    }
+    .projects {
+      margin-top: 3rem;
+    }
+    .swiper {
+      width: 100%;
+      padding-bottom: 2.5rem;
+    }
+    .swiper-slide {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 2rem;
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.2rem;
+      color: var(--text);
+      transition: transform 0.3s ease;
+      cursor: pointer;
+      user-select: none;
+    }
+    .swiper-slide:hover,
+    .swiper-slide:focus-visible {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(37, 99, 235, 0.35);
+      outline: none;
+    }
+    .project-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent);
+      text-shadow: 0 0 4px var(--accent);
+    }
+    .project-desc {
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+    .project-desc ul {
+      margin: 0.5rem 0 0 1.2rem;
+      padding: 0;
+      list-style-type: disc;
+    }
+    .contact {
+      background: var(--glass-bg);
+      border-radius: var(--radius);
+      padding: 2.5rem 2rem;
+      box-shadow: var(--shadow);
+      max-width: 460px;
+      margin: 3rem auto 4rem;
+      text-align: center;
+      border: 1px solid var(--glass-border);
+      backdrop-filter: blur(15px);
+      color: var(--text);
+      font-size: 1.15rem;
+    }
+    .contact a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 700;
+      margin: 0 0.5rem;
+      transition: color 0.3s;
+      word-break: break-word;
+    }
+    .contact a:hover,
+    .contact a:focus-visible {
+      color: var(--primary);
+      outline: none;
+      text-decoration: underline;
+    }
+    footer {
+      text-align: center;
+      color: var(--muted);
+      padding: 1.5rem 0 1rem;
+      font-size: 0.95rem;
+      user-select: none;
+    }
+    /* Back to top button */
+    #backToTop {
+      position: fixed;
+      bottom: 2.5rem;
+      right: 2.5rem;
+      background: var(--primary);
+      color: var(--text);
+      border: none;
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 1.6rem;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s;
+      z-index: 150;
+    }
+    #backToTop:hover,
+    #backToTop:focus-visible {
+      background: var(--accent);
+      outline: none;
+    }
+    /* Animations */
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* === BURGER MENU === */
+    /* Shfaq burger menu dhe fsheh nav links në mobile/tablet */
+    @media (max-width: 1024px) {
+      nav {
+        position: fixed;
+        top: 60px;
+        right: 0;
+        background: rgba(15, 23, 42, 0.95);
+        width: 220px;
+        height: calc(100vh - 60px);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        padding-top: 1.5rem;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.5);
+        z-index: 110;
+      }
+      nav.open {
+        transform: translateX(0);
+      }
+      nav a {
+        margin: 1rem 0;
+        font-size: 1.2rem;
+        margin-left: 0;
+        padding-left: 1.5rem;
+      }
+      header {
+        padding-right: 1.5rem;
+      }
+      /* Burger icon container */
+      .burger-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 28px;
+        height: 22px;
+        cursor: pointer;
+        z-index: 120;
+      }
+      .burger-menu div {
+        width: 100%;
+        height: 3px;
+        background: var(--primary);
+        border-radius: 2px;
+        transition: all 0.3s ease;
+      }
+      
+  /* Keep skills and services in row */
+  .skills-list,
+  .services-list {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem; /* smaller gap */
+  }
+
+  /* Smaller skill/service boxes */
+  .skill,
+  .service {
+    min-width: 100px; /* smaller width */
+    padding: 0.6rem 1rem; /* less padding */
+    font-size: 0.9rem; /* smaller text */
+    text-align: center;
+  }
+}
+
+      
+    
+
+    /* Për mobile shumë të vegjël */
+    @media (max-width: 480px) {
+      .hero img {
+        width: 70px;
+        height: 70px;
+      }
+      .hero h1 {
+        font-size: 1.6rem;
+      }
+      .hero h2 {
+        font-size: 0.9rem;
+      }
+      .contact {
+        padding: 1.2rem 1rem;
+      }
+      .skill,
+      .service {
+        min-width: 100px !important;
+        font-size: 0.85rem;
+        padding: 0.6rem 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">Reis Manaj</div>
+    <div class="burger-menu" aria-label="Toggle menu" role="button" tabindex="0">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <nav aria-label="Primary navigation">
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#services">Services</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Introduction">
+      <img src="logo.png" alt="Portrait of Reis Manaj" />
+      <h1>Reis Manaj</h1>
+      <h2>Web Developer &amp; Founder, Business Web Studio</h2>
+      <div class="about">
+        I am a passionate and self-taught web developer based in Albania.<br />
+        With 4+ years of experience in customer relations and management, I combine strong communication skills with technical expertise.<br /><br />
+        As the founder of <b>Business Web Studio</b>, I specialize in creating clean, fast, and responsive websites using <b>HTML</b>, <b>CSS</b>, <b>JavaScript</b>, <b>Tailwind CSS</b>, and <b>React</b>.<br />
+        I help individuals and small businesses establish a professional online presence with SEO-friendly, user-focused websites that perform smoothly on all devices.
+      </div>
+    </section>
+
+    <section class="section" id="skills" tabindex="-1" aria-labelledby="skills-title">
+      <h3 class="section-title" id="skills-title">🧠 Skills</h3>
+      <div class="skills-list">
+        <div class="skill" tabindex="0">HTML5</div>
+        <div class="skill" tabindex="0">CSS3</div>
+        <div class="skill" tabindex="0">JavaScript (ES6+)</div>
+        <div class="skill" tabindex="0">Tailwind CSS</div>
+        <div class="skill" tabindex="0">Bootstrap</div>
+        <div class="skill" tabindex="0">React</div>
+        <div class="skill" tabindex="0">Git &amp; GitHub</div>
+        <div class="skill" tabindex="0">VS Code</div>
+        <div class="skill" tabindex="0">Figma</div>
+        <div class="skill" tabindex="0">EmailJS</div>
+        <div class="skill" tabindex="0">Firebase (basic)</div>
+        <div class="skill" tabindex="0">GSAP</div>
+        <div class="skill" tabindex="0">Swiper.js</div>
+        <div class="skill" tabindex="0">Responsive Design</div>
+        <div class="skill" tabindex="0">Web Performance</div>
+        <div class="skill" tabindex="0">SEO Basics</div>
+        <div class="skill" tabindex="0">Clean UI</div>
+      </div>
+    </section>
+
+    <section class="section projects" id="projects" tabindex="-1" aria-labelledby="projects-title">
+      <h3 class="section-title" id="projects-title"> Projects</h3>
+      <div class="swiper" aria-label="Projects carousel">
+        <div class="swiper-wrapper">
+          <article class="swiper-slide" tabindex="0" aria-labelledby="project1-title" aria-describedby="project1-desc">
+            <h4 class="project-title" id="project1-title">Business Web Studio</h4>
+            <div class="project-desc" id="project1-desc">
+              My personal brand, where I’ve built and deployed websites with features like:
+              <ul>
+                <li>Responsive landing pages</li>
+                <li>Animated image galleries</li>
+                <li>Integrated contact forms</li>
+                <li>Mobile-first layouts</li>
+              </ul>
+            </div>
+          </article>
+          <article class="swiper-slide" tabindex="0" aria-labelledby="project2-title" aria-describedby="project2-desc">
+            <h4 class="project-title" id="project2-title">Responsive Landing Page</h4>
+            <div class="project-desc" id="project2-desc">
+              Designed and developed a modern, mobile-first landing page for a local business, focusing on fast load times and SEO optimization.
+            </div>
+          </article>
+          <article class="swiper-slide" tabindex="0" aria-labelledby="project3-title" aria-describedby="project3-desc">
+            <h4 class="project-title" id="project3-title">Animated Gallery</h4>
+            <div class="project-desc" id="project3-desc">
+              Built an interactive image gallery using React and GSAP for smooth animations and Swiper.js for touch navigation.
+            </div>
+          </article>
+          <article class="swiper-slide" tabindex="0" aria-labelledby="project4-title" aria-describedby="project4-desc">
+            <h4 class="project-title" id="project4-title">Contact Form Integration</h4>
+            <div class="project-desc" id="project4-desc">
+              Developed custom contact forms with EmailJS, enabling direct email communication from the website with validation and spam protection.
+            </div>
+          </article>
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>
+
+    <section class="section" id="services" tabindex="-1" aria-labelledby="services-title">
+      <h3 class="section-title" id="services-title">🚀 Services</h3>
+      <div class="services-list">
+        <div class="service" tabindex="0">Custom Website Design</div>
+        <div class="service" tabindex="0">Responsive Development</div>
+        <div class="service" tabindex="0">SEO Optimization</div>
+        <div class="service" tabindex="0">Website Maintenance</div>
+        <div class="service" tabindex="0">E-commerce Setup</div>
+        <div class="service" tabindex="0">UI/UX Consulting</div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" tabindex="-1" aria-label="Contact information">
+      <h3 class="section-title">📞 Contact Me</h3>
+      <p>
+        Feel free to reach out by email or social media:<br />
+        <a href="mailto:reismanaj@gmail.com" target="_blank" rel="noopener noreferrer">reismanaj@gmail.com</a><br />
+        <a href="https://www.linkedin.com/in/reis-manaj-9bb56b2b5/" target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+        <a href="https://github.com/buisnesswebstudio" target="_blank" rel="noopener noreferrer">GitHub</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Reis Manaj. All rights reserved.
+  </footer>
+
+  <button id="backToTop" aria-label="Back to top" title="Back to top">↑</button>
+
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <script>
+    // Burger menu toggle
+    const burgerMenu = document.querySelector('.burger-menu');
+    const nav = document.querySelector('nav');
+
+    burgerMenu.addEventListener('click', () => {
+      nav.classList.toggle('open');
+    });
+
+    burgerMenu.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        nav.classList.toggle('open');
+      }
+    });
+
+    // Back to top button
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTop.style.display = 'flex';
+      } else {
+        backToTop.style.display = 'none';
+      }
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Swiper initialization
+    const swiper = new Swiper('.swiper', {
+      loop: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      slidesPerView: 1,
+      spaceBetween: 20,
+      breakpoints: {
+        640: {
+          slidesPerView: 1,
+        },
+        768: {
+          slidesPerView: 2,
+        },
+        1024: {
+          slidesPerView: 3,
+        },
+      },
+      a11y: true,
+    });
+  </script>
+</body>
+</html>
